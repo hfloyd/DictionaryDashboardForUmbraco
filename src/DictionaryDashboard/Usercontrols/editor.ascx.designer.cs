@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Futuristic.Umbraco.Packages.DictionaryDashboard.usercontrols {
+namespace DictionaryDashboard.usercontrols {
     
     
     public partial class editor {

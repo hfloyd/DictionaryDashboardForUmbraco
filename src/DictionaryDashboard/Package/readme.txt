@@ -11,7 +11,7 @@ Install this package as a local package in Umbraco.
 
 If updating from a previous version, you should uninstall the previous version before installing the latest version of this package.
 
-A dashboard tab and three dashboard controls will be added to the Content secion in Umbraco. 
+A dashboard tab and three dashboard controls will be added to the Content section in Umbraco. 
 
 You can further configure the dashboard controls in the /config/Dashboard.config file.
 
@@ -19,5 +19,8 @@ You can further configure the dashboard controls in the /config/Dashboard.config
 
 ### Questions / comments ###
 
-www.it-future.dk
-dennis@it-future.dk
+https://our.umbraco.org/projects/backoffice-extensions/dictionary-dashboard/feedback
+
+### Source Code ###
+
+https://github.com/hfloyd/DictionaryDashboardForUmbraco

@@ -2,51 +2,51 @@
 <umbPackage>
 	<files>
 		<file>
-			<guid>Futuristic.Umbraco.Packages.DictionaryDashboard.dll</guid>
+			<guid>DictionaryDashboard.dll</guid>
 			<orgPath>/bin</orgPath>
-			<orgName>Futuristic.Umbraco.Packages.DictionaryDashboard.dll</orgName>
+			<orgName>DictionaryDashboard.dll</orgName>
 		</file>
 		<file>
 			<guid>editor.ascx</guid>
-			<orgPath>/usercontrols/Futuristic/DictionaryDashboard</orgPath>
+			<orgPath>/usercontrols/DictionaryDashboard</orgPath>
 			<orgName>editor.ascx</orgName>
 		</file>
 		<file>
 			<guid>export.ascx</guid>
-			<orgPath>/usercontrols/Futuristic/DictionaryDashboard</orgPath>
+			<orgPath>/usercontrols/DictionaryDashboard</orgPath>
 			<orgName>export.ascx</orgName>
 		</file>
 		<file>
 			<guid>import.ascx</guid>
-			<orgPath>/usercontrols/Futuristic/DictionaryDashboard</orgPath>
+			<orgPath>/usercontrols/DictionaryDashboard</orgPath>
 			<orgName>import.ascx</orgName>
 		</file>
 		<file>
 			<guid>installer.ascx</guid>
-			<orgPath>/usercontrols/Futuristic/DictionaryDashboard</orgPath>
+			<orgPath>/usercontrols/DictionaryDashboard</orgPath>
 			<orgName>installer.ascx</orgName>
 		</file>
 		<file>
 			<guid>high-five.png</guid>
-			<orgPath>/images/Futuristic/DictionaryDashboard</orgPath>
+			<orgPath>/images/DictionaryDashboard</orgPath>
 			<orgName>high-five.png</orgName>
 		</file>
 	</files>
 	<info>
 		<package>
 			<name>Dictionary Dashboard</name>
-			<version>0.9.3</version>
+			<version>1.0</version>
 			<license url="http://www.opensource.org/licenses/mit-license.php">MIT license</license>
 			<url>http://our.umbraco.org/projects/backoffice-extensions/dictionary-dashboard</url>
 			<requirements>
-				<major>4</major>
-				<minor>7</minor>
+				<major>7</major>
+				<minor>0</minor>
 				<patch>0</patch>
 			</requirements>
 		</package>
 		<author>
-			<name>Dennis Milandt</name>
-			<website>http://www.it-future.dk</website>
+			<name>Heather Floyd, Dennis Milandt &amp; Others</name>
+			<website>https://github.com/hfloyd/DictionaryDashboardForUmbraco/</website>
 		</author>
 		<readme>
 			<![CDATA[>>> Are you updating from a previous version? <<<
@@ -68,19 +68,23 @@ Features
 	<DictionaryItems />
 	<Languages />
 	<DataTypes />
-	<control>/usercontrols/Futuristic/DictionaryDashboard/installer.ascx</control>
+	<control>/usercontrols/DictionaryDashboard/installer.ascx</control>
 	<Actions>
-		<Action runat="install" undo="true" alias="addDashboardSection" dashboardAlias="Futuristic.DictionaryDashboardSection">
+		<Action runat="install" undo="true" alias="addDashboardSection" dashboardAlias="DictionaryDashboardSection">
 			<section>
 				<areas>
 					<area>default</area>
 					<area>content</area>
 				</areas>
-				<tab caption="Dictionary">
-					<control showOnce="false" addPanel="true" panelCaption="">/usercontrols/Futuristic/DictionaryDashboard/editor.ascx</control>
-					<control showOnce="false" addPanel="true" panelCaption="">/usercontrols/Futuristic/DictionaryDashboard/export.ascx</control>
-					<control showOnce="false" addPanel="true" panelCaption="">/usercontrols/Futuristic/DictionaryDashboard/import.ascx</control>
-				</tab>
+        <tab caption="Dictionary Edit">
+          <control showOnce="false" addPanel="true" panelCaption="">/usercontrols/DictionaryDashboard/editor.ascx</control>
+        </tab>
+        <tab caption="Dictionary Export">
+          <control showOnce="false" addPanel="true" panelCaption="">/usercontrols/DictionaryDashboard/export.ascx</control>
+        </tab>
+        <tab caption="Dictionary Import">
+          <control showOnce="false" addPanel="true" panelCaption="">/usercontrols/DictionaryDashboard/import.ascx</control>
+        </tab>
 			</section>
 		</Action>
 	</Actions>

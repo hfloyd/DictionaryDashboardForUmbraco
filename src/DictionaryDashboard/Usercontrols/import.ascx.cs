@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using umbraco.cms.businesslogic;
 using umbraco.cms.businesslogic.language;
 
-namespace Futuristic.Umbraco.Packages.DictionaryDashboard.usercontrols
+namespace DictionaryDashboard.usercontrols
 {
 	public partial class import : System.Web.UI.UserControl
 	{
