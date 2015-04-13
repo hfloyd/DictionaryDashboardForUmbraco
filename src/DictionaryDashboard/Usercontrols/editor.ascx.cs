@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using umbraco.cms.businesslogic;
 using umbraco.cms.businesslogic.language;
+using Umbraco.Core;
+using Umbraco.Core.Persistence;
 
 namespace DictionaryDashboard.usercontrols
 {
     public partial class editor : System.Web.UI.UserControl
     {
+        private UmbracoDatabase _db = ApplicationContext.Current.DatabaseContext.Database;
         #region Event Wireup
 
         override protected void OnInit(EventArgs e)
@@ -34,7 +37,7 @@ namespace DictionaryDashboard.usercontrols
         }
 
         protected List<Language> languages = new List<Language>();
-        
+
         protected List<Dictionary.DictionaryItem> dictItems = new List<Dictionary.DictionaryItem>();
 
         #endregion
@@ -44,9 +47,7 @@ namespace DictionaryDashboard.usercontrols
         protected void Page_Load(object sender, EventArgs e)
         {
             this.litStatus.Text = "";
-
             this.languages.AddRange(Language.GetAllAsList());
-
             //Loop through all levels of dictionary items, adding each to the list
             foreach (var root in Dictionary.getTopMostItems)
             {
@@ -68,7 +69,6 @@ namespace DictionaryDashboard.usercontrols
             if (Dictionary.DictionaryItem.hasKey(this.selItems.SelectedValue))
             {
                 var item = new Dictionary.DictionaryItem(this.selItems.SelectedValue);
-
                 foreach (var key in Request.Form.AllKeys)
                 {
                     if (key.StartsWith(this.ClientID + "-translation-"))
@@ -78,9 +78,7 @@ namespace DictionaryDashboard.usercontrols
                     }
                 }
             }
-
-            this.litStatus.Text = "<div class=\"success\"><h3>Success</h3><p>The \"" + selItems.SelectedItem.Text + "\" Dictionary item was updated.</p></div>";
-
+            this.litStatus.Text = "<div class=\"success\"><h3>Success</h3><p>The \"" + this.selItems.SelectedValue + "\" Dictionary item was updated.</p></div>";
             this.selItems.SelectedValue = "";
             this.phEdit.Visible = false;
         }
@@ -89,20 +87,13 @@ namespace DictionaryDashboard.usercontrols
         {
             this.selItems.SelectedValue = "";
             this.phEdit.Visible = false;
+            txtTerm.Text = string.Empty;
         }
 
         protected void selItems_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Dictionary.DictionaryItem.hasKey(this.selItems.SelectedValue))
-            {
-                this.phEdit.Visible = true;
-                this.repTranslations.DataSource = languages;
-                this.repTranslations.DataBind();
-            }
-            else
-            {
-                this.phEdit.Visible = false;
-            }
+            txtTerm.Text = string.Empty;
+            ShowDictionaryItem(this.selItems.SelectedValue);
         }
 
         #endregion
@@ -116,7 +107,6 @@ namespace DictionaryDashboard.usercontrols
                 var item = new Dictionary.DictionaryItem(this.selItems.SelectedValue);
                 return item.Value(languageId);
             }
-
             return "";
         }
 
@@ -134,5 +124,79 @@ namespace DictionaryDashboard.usercontrols
         }
 
         #endregion
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            this.phEdit.Visible = false;
+            this.selItems.SelectedValue = "";
+            if (string.IsNullOrWhiteSpace(txtTerm.Text))
+            {
+                return;
+            }
+            //Search for item in cmsLanguageText table
+            var res = this._db.Fetch<cmsLanguageText>(string.Format("SELECT * FROM cmsLanguageText WHERE value like LOWER(N'%{0}%')", txtTerm.Text.ToLower())).ToList();
+            if (res.Count() > 1)
+            {
+                this.phMultipleSearch.Visible = true;
+                this.repSearch.DataSource = res;
+                this.repSearch.DataBind();
+            }
+            else if (res.Count() == 1)
+            {
+                var dicItem = GetDictionaryItemById(res.FirstOrDefault().UniqueId);
+                ShowDictionaryItem(dicItem.key);
+            }
+        }
+        public void clickbutton(Object sender, CommandEventArgs e)
+        {
+            string guid = ((LinkButton)sender).Attributes["RowID"].ToString().Trim();
+            var dicItem = GetDictionaryItemById(new Guid(guid));
+            ShowDictionaryItem(dicItem.key);
+            this.phMultipleSearch.Visible = false;
+        }
+        /// <summary>
+        /// Get dictionary item by guid id and PetaPoco
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        private cmsDictionary GetDictionaryItemById(Guid uniqueId)
+        {
+            return this._db.SingleOrDefault<cmsDictionary>(string.Format("SELECT * FROM cmsDictionary WHERE id = '{0}'", uniqueId));
+        }
+        /// <summary>
+        /// If key is available then show the dic item 
+        /// </summary>
+        /// <param name="key"></param>
+        private void ShowDictionaryItem(string key)
+        {
+            if (Dictionary.DictionaryItem.hasKey(key))
+            {
+                this.selItems.ClearSelection();
+                this.selItems.Items.FindByValue(key).Selected = true;
+                this.phEdit.Visible = true;
+                this.repTranslations.DataSource = languages;
+                this.repTranslations.DataBind();
+            }
+            else
+            {
+                this.phEdit.Visible = false;
+            }
+        }
+    }
+
+
+    public class cmsLanguageText
+    {
+        public int pk { get; set; }
+        public int languageId { get; set; }
+        public Guid UniqueId { get; set; }
+        public string value { get; set; }
+    }
+    public class cmsDictionary
+    {
+        public int pk { get; set; }
+        public Guid id { get; set; }
+        public Guid parent { get; set; }
+        public string key { get; set; }
     }
 }

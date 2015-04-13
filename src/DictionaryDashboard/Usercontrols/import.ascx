@@ -15,8 +15,8 @@
 			<asp:CheckBoxList runat="server" ID="chkListLanguages" />
 		</div>
 
-		<span style="margin-right:10px;"><asp:Button runat="server" ID="btnValidate" Text="Validate XML" CausesValidation="false" /></span>
-		<span style="margin-right:10px;"><asp:Button runat="server" ID="btnImport" Text="Import XML" CausesValidation="false" /></span>
+		<span style="margin-right:10px;"><asp:Button runat="server" ID="btnValidate" Text="Validate XML" CausesValidation="false" CssClass="btn btn-primary" /></span>
+		<span style="margin-right:10px;"><asp:Button runat="server" ID="btnImport" Text="Import XML" CausesValidation="false" CssClass="btn btn-primary" /></span>
 	</div>
 
 	<asp:Literal runat="server" ID="litStatus" />
