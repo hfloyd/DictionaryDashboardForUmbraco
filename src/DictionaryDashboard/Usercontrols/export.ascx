@@ -9,6 +9,6 @@
 		<asp:CheckBoxList runat="server" ID="chkListLanguages" />
 	</div>
 
-	<span style="margin-right:10px;"><asp:Button runat="server" ID="btnExport" Text="Export to XML" CausesValidation="false" /></span>
+	<span style="margin-right:10px;"><asp:Button runat="server" ID="btnExport" Text="Export to XML" CausesValidation="false" CssClass="btn btn-primary"/></span>
 
 </div>
