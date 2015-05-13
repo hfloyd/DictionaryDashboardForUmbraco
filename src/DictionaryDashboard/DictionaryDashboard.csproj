@@ -275,7 +275,9 @@
   <PropertyGroup>
     <PostBuildEvent>IF $(ConfigurationName) == Release call "$(ProjectDir)Deployment\release.bat" "$(ProjectDir)"
 IF $(ConfigurationName) == Debug XCOPY "$(TargetDir)$(TargetName).*" "$(SolutionDir)..\..\build\" /Y
-IF $(ConfigurationName) == Debug XCOPY "$(TargetDir)$(TargetName).*" "$(SolutionDir)..\..\..\Umb7TestSite\bin" /Y</PostBuildEvent>
+IF $(ConfigurationName) == Debug XCOPY "$(ProjectDir)\Usercontrols\*.*" "$(SolutionDir)..\..\build\" /Y
+IF $(ConfigurationName) == Debug XCOPY "$(TargetDir)$(TargetName).*" "$(SolutionDir)..\..\..\Umb7TestSite\bin" /Y
+IF $(ConfigurationName) == Debug XCOPY "$(ProjectDir)\Usercontrols\*.ascx" "$(SolutionDir)..\..\..\Umb7TestSite\UserControls\DictionaryDashboard" /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

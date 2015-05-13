@@ -5,7 +5,7 @@ SET _projectDir=%_projectDir:###"=%
 SET _projectDir=%_projectDir:###=%
 
 :: Version number & Zip application
-SET _versionNum="1.0"
+SET _versionNum="1.1"
 SET _zipAppPath=7Zip
 
 :: DictionaryDashboard
