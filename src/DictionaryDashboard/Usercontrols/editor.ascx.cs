@@ -16,6 +16,8 @@ namespace DictionaryDashboard.usercontrols
 
         override protected void OnInit(EventArgs e)
         {
+            ((umbraco.UmbracoDefault)this.Page).ValidateRequest = false;
+            
             InitializeComponent();
             base.OnInit(e);
         }
